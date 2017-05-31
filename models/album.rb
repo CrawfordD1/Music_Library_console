@@ -44,14 +44,14 @@ attr_reader :id
     return all_albums.map {|album| Album.new(album)}
   end
 
-  def self.find(id)
-    sql = "SELECT * FROM albums WHERE id = #{id}"
-    results = SqlRunner.run()
+
+  def self.find(input_id)
+    sql = "SELECT * FROM albums WHERE id = #{input_id}"
+    results = SqlRunner.run(sql)
     album_hash = results.first()
     album = Album.new(album_hash)
     return album
   end
-
 
 
 end

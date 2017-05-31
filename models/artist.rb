@@ -41,5 +41,13 @@ class Artist
     return all_artists.map {|artist| Artist.new(artist)}
   end
 
+  def self.find(input_id)
+    sql = "SELECT * FROM artists WHERE id = #{input_id}"
+    results = SqlRunner.run(sql)
+    artist_hash = results.first()
+    artist = Artist.new(artist_hash)
+    return artist
+  end
+
 
 end
