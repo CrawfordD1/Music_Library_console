@@ -4,7 +4,7 @@ require_relative '../db/sql_runner.rb'
 
 class Album
 
-attr_accessor :name, :genre 
+attr_accessor :name, :genre
 attr_reader :id
 
   def initialize(options)
@@ -15,9 +15,22 @@ attr_reader :id
   end
 
   def save()
-    sql = "INSERT INTO albums(title, genre) VALUES ('#{@title}', '#{@genre}') RETURNING * ;"
+    sql = "INSERT INTO albums(artist_id, title, genre) VALUES (#{@artist_id}, '#{@title}', '#{@genre}') RETURNING * ;"
     result = SqlRunner.run(sql)
     @id = result[0]['id'].to_i()
+  end
+
+  def update()
+    sql = "UPDATE albums SET (artist_id, title, genre) = (#{@artist_id}, '#{@title}', #{@genre}) WHERE id = #{@id};"
+    SqlRunner.run(sql)
+  end
+
+  def artist()
+    sql = "SELECT * FROM artists WHERE id = #{@artist_id};"
+    results = SqlRunner.run(sql)
+    artist_data = results[0]
+    selected_artist = Artist.new(artist_data)
+    return selected_artist
   end
 
   def self.delete_all()
@@ -29,6 +42,14 @@ attr_reader :id
     sql = "SELECT * FROM albums;"
     all_albums = SqlRunner.run(sql)
     return all_albums.map {|album| Album.new(album)}
+  end
+
+  def self.find(id)
+    sql = "SELECT * FROM albums WHERE id = #{id}"
+    results = SqlRunner.run()
+    album_hash = results.first()
+    album = Album.new(album_hash)
+    return album
   end
 
 

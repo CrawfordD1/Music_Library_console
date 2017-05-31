@@ -1,4 +1,4 @@
-DROP TABLE albums;
+DROP TABLE IF EXISTS albums;
 DROP TABLE artists;
 
 

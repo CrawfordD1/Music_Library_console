@@ -7,15 +7,27 @@ class Artist
   attr_accessor :name
   attr_reader :id
 
+
   def initialize(options)
-    @id = options['id'].to_i() 
+    @id = options['id'].to_i()
     @name = options['name']
+  end
+
+  def update()
+    sql = "UPDATE artists SET (name) = ('#{@name}') WHERE id = #{@id};"
+    SqlRunner.run(sql)
   end
 
   def save()
     sql = "INSERT INTO artists(name) VALUES ('#{@name}') RETURNING * ;"
     result = SqlRunner.run(sql)
     @id = result[0]['id'].to_i()
+  end
+
+  def albums()
+    sql = "SELECT * FROM albums WHERE artist_id = #{@id};"
+    all_albums = SqlRunner.run(sql)
+    return all_albums.map {|new_album| Album.new(new_album)}
   end
 
   def self.delete_all()
@@ -28,5 +40,6 @@ class Artist
     all_artists = SqlRunner.run(sql)
     return all_artists.map {|artist| Artist.new(artist)}
   end
+
 
 end
