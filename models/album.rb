@@ -4,7 +4,7 @@ require_relative '../db/sql_runner.rb'
 
 class Album
 
-attr_accessor :name, :genre
+attr_accessor :title, :genre
 attr_reader :id
 
   def initialize(options)
