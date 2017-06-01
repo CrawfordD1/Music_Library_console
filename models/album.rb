@@ -21,7 +21,7 @@ attr_reader :id
   end
 
   def update()
-    sql = "UPDATE albums SET (artist_id, title, genre) = (#{@artist_id}, '#{@title}', #{@genre}) WHERE id = #{@id};"
+    sql = "UPDATE albums SET (artist_id, title, genre) = (#{@artist_id}, '#{@title}', '#{@genre}') WHERE id = #{@id};"
     SqlRunner.run(sql)
   end
 

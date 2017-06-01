@@ -6,19 +6,19 @@ Album.delete_all()
 Artist.delete_all()
 
 
- artist1 = Artist.new({
+artist1 = Artist.new({
   'name' => 'Snoop Dogg'
   })
- artist2 =  Artist.new({
+artist2 =  Artist.new({
   'name' => 'Dr Dre'
   })
- artist3 = Artist.new({
+artist3 = Artist.new({
   'name' => 'Die Antwoord'
   })
 
- artist1.save()
- artist2.save()
- artist3.save()
+artist1.save()
+artist2.save()
+artist3.save()
 
 album1 = Album.new({
   'artist_id' => artist1.id(),
